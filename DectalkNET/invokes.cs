@@ -7,7 +7,7 @@ namespace DectalkNET.invokes
     public static class defines
     {
         public const uint WAVE_MAPPER = unchecked((uint)(-1));
-        public static IntPtr NULL = (IntPtr)0;
+        public static IntPtr NULL = IntPtr.Zero;
     }
 
     public enum MMRESULT : uint

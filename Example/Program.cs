@@ -14,35 +14,13 @@ namespace ExampleTest
         static void Main(string[] args)
         {
             Dectalk.Startup(0);
-            //Dectalk.Startup(false);
-            //Dectalk.WaveOut(Console.ReadLine(), "./output.wav");
-
-            ConsoleKeyInfo cki = new ConsoleKeyInfo();
-            string outp = "";
-
-            while (cki.Key != ConsoleKey.Escape)
+            if (Dectalk.status != DectalkNET.invokes.MMRESULT.MMSYSERR_NOERROR)
             {
-                cki = Console.ReadKey(true);
-                switch (cki.Key)
-                {
-                    case ConsoleKey.Enter:
-                        Console.Write("\r\n");
-                        process(outp);
-                        outp = string.Empty;
-                        break;
-                    case ConsoleKey.Backspace:
-                        if (outp.Length > 0)
-                        {
-                            outp = outp.Remove(outp.Length - 1);
-                            Console.Write("\b \b");
-                        }
-                        break;
-                    default:
-                        outp += cki.KeyChar;
-                        Console.Write(cki.KeyChar);
-                        break;
-                }
+                Console.WriteLine("Error starting Dectalk");
             }
+
+            string outp = "Hello World";
+            process(outp);
 
             Dectalk.Shutdown();
         }
@@ -52,7 +30,8 @@ namespace ExampleTest
             if (output.StartsWith("vol:")) Dectalk.SetVolume(int.Parse(output.Substring(4)));
             else if (output.StartsWith("log:"))
             {
-                Dectalk.Say($"[:log phoneme on]{output.Substring(4)}[:log phoneme off]");
+                //Dectalk.Say($"[:log phoneme on]{output.Substring(4)}[:log phoneme off]");
+                Dectalk.WaveOut(output, "./output.wav");
                 Dectalk.WaitForSpeech();
                 string temp = File.ReadAllText("log.txt");
                 Console.WriteLine(temp);
@@ -60,8 +39,8 @@ namespace ExampleTest
             }
             else
             {
-                Dectalk.Say(output);
-                //Dectalk.WaveOut(output, "./output.wav");
+                //Dectalk.Say(output);
+                Dectalk.WaveOut(output, "./output.wav");
                 Dectalk.WaitForSpeech();
             }
         }

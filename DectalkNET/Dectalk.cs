@@ -11,7 +11,7 @@ namespace DectalkNET
     {
         #region Dll Imports
         [DllImport("dectalk.dll", CallingConvention = CallingConvention.Cdecl)]
-        private unsafe static extern MMRESULT TextToSpeechStartup(IntPtr HWND, IntPtr* LPTTS_HANDLE_T, uint device, int i);
+        private unsafe static extern MMRESULT TextToSpeechStartup(IntPtr* LPTTS_HANDLE_T, uint device, int i, IntPtr DtCallbackRoutine, long l);
 
         [DllImport("dectalk.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern MMRESULT TextToSpeechShutdown(IntPtr LPTTS_HANDLE_T);
@@ -54,7 +54,7 @@ namespace DectalkNET
             IntPtr HandlePtr = defines.NULL;
             unsafe
             {
-                status = TextToSpeechStartup(defines.NULL, &HandlePtr, device, 0);
+                status = TextToSpeechStartup(&HandlePtr, device, 0, IntPtr.Zero, 0);
             }
             ttsHandlePtr = HandlePtr;
         }
