@@ -7,4 +7,5 @@
  To run, do docker build and run within cli
  
 ## Credits
+ Forked from https://github.com/Jor02/DectalkNET
  DECtalk https://github.com/dectalk/dectalk
